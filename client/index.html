@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Timeline</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+	
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	
+	<main class="app-container">
+		<div class="wrap">
+			<nav>
+				<div class="nav-wrapper">
+					<a href="#!" class="brand-logo"><i class="material-icons">tablet_android</i>Twatt App</a>
+					<ul class="right hide-on-med-and-down">
+						<li>
+							<div class="search-area">
+								<form action="javascript:void(0)">
+									<input type="text" placeholder="Search Twatt" name="searchQuery" id="searchQuery"/>
+								</form>
+							</div>
+							<a href="#"><i class="material-icons">search</i></a>
+						</li>
+						<li><a href="#"><i class="material-icons">refresh</i></a></li>
+						<li><a href="#"><i class="material-icons">more_vert</i></a></li>
+					</ul>
+				</div>
+			</nav>
+
+			<div id="loading" class="u-full-width">
+				<img src="images/loading.gif" alt="loading" />
+			</div><!-- /#loading -->
+			<div class="content" id="content-area">
+			</div><!-- /.content -->
+
+			<a class="waves-effect waves-light btn u-full-width">Load More</a>
+		</div><!-- /.wrap -->
+	</main><!-- /.app-container -->
+
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/materialize.js"></script>
+	<script src="js/init.js"></script>
+	<script src="scripts.js"></script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 const TwitterClient = require('../helpers/twitterClient');
+const urlencode = require('urlencode');
 
 const getRecentTimelines = (req, res) => {
 	 TwitterClient.get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=fujianto")
@@ -10,7 +11,7 @@ const getRecentTimelines = (req, res) => {
 }
 
 const searchTweet = (req, res) => {
-	TwitterClient.get(`https://api.twitter.com/1.1/search/tweets.json?q=${req.body.query}`)
+	TwitterClient.get(`https://api.twitter.com/1.1/search/tweets.json?q=${urlencode(req.body.query)}`)
 		.then((tweet) => {
 			res.status(200).send(tweet);
 		}).catch(err => {

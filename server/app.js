@@ -5,11 +5,13 @@ const logger = require('morgan');
 const OAuth = require('oauth');
 const dotenv = require('dotenv').config();
 const TwitterClient = require('./helpers/twitterClient');
+const cors = require('cors')
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(logger('dev'));
+app.use(cors());
 
 // Route
 const twitterRoute = require('./routers/twitterRoute');
