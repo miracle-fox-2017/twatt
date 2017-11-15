@@ -48,8 +48,21 @@ const searchTweet = function(req,res){
   })
 }
 
+const statusUpdateTweet = function(req,res){
+  oauth.post(
+    'https://api.twitter.com/1.1/statuses/update.json',
+    accessUserToken, //test user token 
+    accessUserSecret, //test user secret   
+    {"status":req.body.newStatus},          
+    function (e, data, response){
+      if (e) console.error(e);        
+      res.status(200).send(data)
+  })
+}
+
 module.exports = {
   getHomeTimeline,
   getUserTimeline,
-  searchTweet
+  searchTweet,
+  statusUpdateTweet
 }
