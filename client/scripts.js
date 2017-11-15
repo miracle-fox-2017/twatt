@@ -2,6 +2,7 @@ $(document).ready(function() {
 	const contentArea = $('#content-area');
 	const loadingArea = $('#loading');
 	const searchQuery = $("#searchQuery");
+	const status = $("#status");
 
 	const loadInitTweet = () => {
 		$.ajax({
@@ -12,7 +13,7 @@ $(document).ready(function() {
 			},
 			success : function(result) {
 				loadingArea.hide();
-				contentArea.append(crunchTweet(result));
+				contentArea.html(crunchTweet(result));
 			},
 			error: function(err) {
 				loadingArea.hide();
@@ -46,25 +47,55 @@ $(document).ready(function() {
 		});
 	}
 
+	const postTweet = () => {
+		status.keypress(function(e) {
+			if(e.which == 13){
+				if (this.value.length > 1) {
+					$.ajax({
+						method:"POST",
+						url: "http://localhost:3000/twitter/new_tweet",
+						data: {
+							status: this.value
+						},
+						beforeSend: function (xhr){
+							loadingArea.show();
+						},
+						success : function(result) {
+							loadingArea.hide();
+							status.val("");
+							loadInitTweet();
+						},
+						error: function(err) {
+							loadingArea.hide();
+							alert("Error fetching data");
+						}
+					})
+				} else {
+					alert("Tweet need more character");
+				}
+			}
+		});
+	}
+
 	const crunchTweet = (tweets, area = '') => {
 		let content = '';
 		let allTweet = area === 'search' ? JSON.parse(tweets).statuses : JSON.parse(tweets);
 
 		allTweet.forEach( function(tweet, index) {
 			content += `
-				<div class="card-panel grey lighten-5 z-depth-1">
-          <div class="row valign-wrapper">
-            <div class="col s2">
-              <img src="${tweet.user.profile_image_url}" alt="" class="circle responsive-img avatar-pic"> <!-- notice the "circle" class -->
-            </div>
-            <div class="col s10">
-            	<h5 class="card-title">@${tweet.user.screen_name}</h5>
-              <span class="black-text">
-                ${tweet.text}
-              </span>
-            </div>
-          </div>
-        </div>
+			<div class="card-panel grey lighten-5 z-depth-1">
+			<div class="row valign-wrapper">
+			<div class="col s2">
+			<img src="${tweet.user.profile_image_url}" alt="" class="circle responsive-img avatar-pic"> <!-- notice the "circle" class -->
+			</div>
+			<div class="col s10">
+			<h5 class="card-title">@${tweet.user.screen_name}</h5>
+			<span class="black-text">
+			${tweet.text}
+			</span>
+			</div>
+			</div>
+			</div>
 			`;
 		});
 
@@ -72,8 +103,7 @@ $(document).ready(function() {
 	}
 
 
-
-	
 	loadInitTweet();
 	searchTweet();
+	postTweet();
 })
