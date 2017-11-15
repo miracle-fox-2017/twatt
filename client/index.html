@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  </head>
+  <body>
+    <h1>My Twitter Client</h1>
+    <input type="text" name="keyword" value="" placeholder="searchTweet">
+    <button class="searchTweet">SEARCH</button>
+    
+    <br><br>
+    <input type="text" name="status" value="" placeholder="status">
+    <button class="statusUpdate">UPDATE STATUS</button>
+    
+    <br><br>
+    <button class=showTimeline>show timeline</button>
+    <div class="timeline">
+      <!-- timeline here -->
+    </div>
+  </body>
+  <script>
+    //get timeline
+    $("button.showTimeline").click(function(){
+      $.ajax({
+        url: 'http://localhost:3000/api/twitter',
+        method: 'GET',
+        dataType: 'JSON',
+        success: function(data){
+          $("div.timeline").empty();
+          data.forEach(d=>{
+            //data here
+            let panel = `
+            <div class="container">
+              <h4>${d.user.name}</h4>
+              <img src="${d.user.profile_image_url}" alt="">
+              <p>${d.text}</p>
+            </div>
+            `
+            $("div.timeline").append(panel)
+          })
+        },
+        fail: function(xhr, msg){
+          //err here
+        }
+      })
+    }); 
+  
+    //status update
+    $('button.statusUpdate').click(function(){
+      let status = $('input[name="status"]').val()
+      $.post("http://localhost:3000/api/twitter", {status: status},
+        function(data, s){
+          // alert(""Data: " + data + "\nStatus: " + s");
+          alert('status successfully updated')
+      });
+    }); 
+    
+    //search tweet
+    $('button.searchTweet').click(function(){
+      let keyword = $('input[name="keyword"]').val()
+      $.post("http://localhost:3000/api/twitter/search", {keyword: keyword},
+        function(data, s){
+          $("div.timeline").empty();
+          var s = JSON.parse(data).statuses
+          s.forEach(d=>{
+            //data here
+            let panel = `
+            <div class="container">
+              <h4>${d.user.name}</h4>
+              <img src="${d.user.profile_image_url}" alt="">
+              <p>${d.text}</p>
+            </div>
+            `
+            $("div.timeline").append(panel)
+          })
+      });
+    }); 
+    
+  </script>
+  
+  
+</html>
