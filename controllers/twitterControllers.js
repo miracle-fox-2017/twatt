@@ -37,7 +37,19 @@ const getUserTimeline = function(req,res){
   })
 }
 
+const searchTweet = function(req,res){
+  oauth.get(
+    'https://api.twitter.com/1.1/search/tweets.json?q=' + req.body.search,
+    accessUserToken, //test user token 
+    accessUserSecret, //test user secret             
+    function (e, data, response){
+      if (e) console.error(e);        
+      res.status(200).send(data)
+  })
+}
+
 module.exports = {
   getHomeTimeline,
-  getUserTimeline
+  getUserTimeline,
+  searchTweet
 }
