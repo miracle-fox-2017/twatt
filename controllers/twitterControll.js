@@ -20,6 +20,29 @@ const getHome=(req,res,next)=>{
     );
 }
 
+const searchTweet=(req,res,next)=>{
+    oauth.get(
+        `https://api.twitter.com/1.1/search/tweets.json?q=${req.body.search}`,
+        userToken.token,userToken.secret,
+        (err,data,respond)=>{
+            res.send(data);
+        }
+    );
+}
+
+const postTweet=(req,res,next)=>{
+    oauth.post(
+        "https://api.twitter.com/1.1/statuses/update.json",
+        userToken.token,userToken.secret,
+        {"status":req.body.tweet},
+        (err,data,respond)=>{
+            res.send(data);
+        }
+    );
+}
+
 module.exports={
-    getHome
+    getHome,
+    searchTweet,
+    postTweet
 };
