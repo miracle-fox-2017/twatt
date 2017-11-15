@@ -1,0 +1,4 @@
+CONSUMER_KEY=<your APP consumer key>
+SECRET_KEY=<your APP secret key>
+USER_TOKEN=<your user token>
+USER_SECRET=<your user secret>

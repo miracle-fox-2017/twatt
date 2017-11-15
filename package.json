@@ -1,0 +1,25 @@
+{
+  "name": "twatt",
+  "version": "1.0.0",
+  "description": "client-server application using twitter oauth (morning) and jquery (afternoon)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miracle-fox-2017/twatt.git"
+  },
+  "author": "Faris Widyantho <radenfaris@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miracle-fox-2017/twatt/issues"
+  },
+  "homepage": "https://github.com/miracle-fox-2017/twatt#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "oauth": "^0.9.15"
+  }
+}
