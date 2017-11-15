@@ -1,7 +1,7 @@
 const twittModel = require('../models/twitterModel')
 
 const getDataByKataKunci = (req, res) => {
-    twittModel.getTwitterByKataKunci(req.params.katakunci)
+    twittModel.getTwitterByKataKunci(req.body.katakunci)
         .then((dataTweets) => {
             res.send(dataTweets)
         })

@@ -61,7 +61,7 @@ function postNewStatus(status) {
 function getDataUserTimeline() {
     return new Promise((resolve, reject) => {
         oauth.get(
-            `https://api.twitter.com/1.1/statuses/user_timeline.json`,
+            `https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=ameliaarahman`,
             process.env.USER_TOKEN, //test user token 
             process.env.USER_SECRET, //test user secret                
             function (e, data, response) {

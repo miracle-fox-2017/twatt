@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 var index = require('./routes/index');
 var twitter = require('./routes/twitter');
@@ -42,5 +43,18 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// app.all('*', (req, res, next) => {
+//   let allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:8080/'];
+//   let origin = req.headers.origin;
+//   if (allowedOrigins.indexOf(origin) > -1) {
+//     console.log(origin);
+//     res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:8080/');
+//   }
+//   res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+//   res.set('Access-Control-Allow-Credentials', 'true');
+//   res.set('Access-Control-Allow-Methods', "GET,POST,PUT,OPTIONS,DELETE");
+//   next();
+// });
 
 module.exports = app;
