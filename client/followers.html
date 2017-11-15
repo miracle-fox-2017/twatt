@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hello Followers!</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+</head>
+<body>
+  <div class="container">
+    <!-- START ARTICLE FEED -->
+    <section class="articles">
+        <div class="column is-8 is-offset-2">
+
+          <!-- START PROMO BLOCK -->
+          <section class="hero is-info is-bold is-small promo-block">
+            <!-- START NAV -->
+            <nav class="navbar is-info">
+              <div class="navbar-brand">
+                 <a class="navbar-item brand-text" href="../">
+                   Mini Tweet
+                 </a>
+                 <div class="navbar-burger burger" data-target="navMenu">
+                   <span></span>
+                   <span></span>
+                   <span></span>
+                 </div>
+               </div>
+              <div id="navMenu" class="navbar-menu">
+                <div class="navbar-start">
+                  <a class="navbar-item" href="index.html">
+                    Home Timeline
+                  </a>
+                  <a class="navbar-item" href="tweet.html">
+                    Create Tweet
+                  </a>
+                  <a class="navbar-item" href="search.html">
+                    Search Tweet
+                  </a>
+                  <a class="navbar-item" href="followers.html">
+                    Showe Followers
+                  </a>
+                  <a class="navbar-item" href="trandingplaces.html">
+                    Trending Places
+                  </a>
+                </div>
+              </div>
+
+            </nav>
+            <!-- router.get('/',  Twitter.getTimeline);
+            router.post('/tweet', Twitter.createTweet);
+            router.post('/search', Twitter.searchFeature);
+            router.get('/places', Twitter.getPlaces);
+            router.get('/followers', Twitter.getFollower); -->
+            <!-- END NAV -->
+          </section>
+          <!-- END PROMO BLOCK -->
+
+          <!-- START ARTICLE -->
+          <div class="card article">
+            <a class="navbar-item button is-info" id="timeline">
+              Show Followers
+            </a>
+            <br/>
+            <div id="hasil"></div>
+          </div>
+          <!-- END ARTICLE -->
+    </section>
+    <!-- END ARTICLE FEED -->
+  </div>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function(){
+        $('a#timeline').click(function() {
+          $.ajax({
+            // method: "GET",
+            url: "http://localhost:3000/twitter/followers",
+            dataType: 'JSON',
+            jsonpCallback: 'callback',
+            type: 'GET',
+            success: (dataFollowers) => {
+              dataFollowers.users.forEach(followers => {
+                let data = `
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-center">
+                        <img src="${followers.profile_image_url}" class="author-image" alt="Placeholder image">
+                    </div>
+                    <div class="media-content has-text-centered">
+                      <p class="title article-title">${followers.name}</p>
+                      <p class="article-title">${followers.screen_name}</p>
+                      <p class="subtitle is-6 article-subtitle">
+                        <a href="#">@status </a>${followers.status.text}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                `
+                $("#hasil").append(data);
+              })
+            }
+          })
+        });
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+    // Get all "navbar-burger" elements
+    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    // Check if there are any navbar burgers
+    if ($navbarBurgers.length > 0) {
+
+      // Add a click event on each of them
+      $navbarBurgers.forEach(function ($el) {
+        $el.addEventListener('click', function () {
+
+          // Get the target from the "data-target" attribute
+          var target = $el.dataset.target;
+          var $target = document.getElementById(target);
+
+          // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+          $el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+
+        });
+      });
+    }
+
+    });
+  </script>
+</body>
+</html>
