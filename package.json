@@ -1,0 +1,27 @@
+{
+  "name": "twatt",
+  "version": "1.0.0",
+  "description": "client-server application using twitter oauth (morning) and jquery (afternoon)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "live": "live-server --open=client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomybudiman/twatt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomybudiman/twatt/issues"
+  },
+  "homepage": "https://github.com/tomybudiman/twatt#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "oauth": "^0.9.15"
+  }
+}
