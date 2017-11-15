@@ -31,11 +31,21 @@ const postNewStatus = (req, res) => {
         })
 }
 
+const getDataUserTimeline = (req, res) => {
+    twittModel.getDataUserTimeline()
+        .then((dataTweets) => {
+            res.send(dataTweets)
+        })
+        .catch((reason) => {
+            res.send(reason)
+        })
+}
 
 
 
 module.exports = {
     getDataByKataKunci,
     getDataTimelineFeature,
-    postNewStatus
+    postNewStatus,
+    getDataUserTimeline
 }

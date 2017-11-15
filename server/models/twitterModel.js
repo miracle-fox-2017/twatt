@@ -58,9 +58,23 @@ function postNewStatus(status) {
     })
 }
 
+function getDataUserTimeline() {
+    return new Promise((resolve, reject) => {
+        oauth.get(
+            `https://api.twitter.com/1.1/statuses/user_timeline.json`,
+            process.env.USER_TOKEN, //test user token 
+            process.env.USER_SECRET, //test user secret                
+            function (e, data, response) {
+                if (e) reject(e);
+                resolve(data);
+            });
+    })
+}
+
 
 module.exports = {
     getTwitterByKataKunci,
     getDataTimelineFeature,
-    postNewStatus
+    postNewStatus,
+    getDataUserTimeline
 }
