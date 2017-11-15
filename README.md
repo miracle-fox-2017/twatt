@@ -1,5 +1,6 @@
 # twatt
-client-server application using twitter oauth (morning) and jquery (afternoon)
+client-server application using twitter oauth (morning) and jquery (afternoon)  
+simple twitter client can do update status, show timeline, and search tweet.
 
 ## List of Routes:  
 | Route | HTTP | Require Data | Description |
@@ -11,4 +12,7 @@ client-server application using twitter oauth (morning) and jquery (afternoon)
 ## How to use this:  
 1. npm install
 2. update env-temp to .env and fill your consumer and secret key
-3. :rocket:  
+3. npm start
+4. go to client/index.html
+5. use the app  
+6. :rocket:  
