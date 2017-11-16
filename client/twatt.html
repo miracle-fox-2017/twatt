@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Twitter</title>
+
+  <!-- Bootstrap -->
+  <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">TWATT</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="twatt.html">HOME</a></li>
+        <li><a href="input.html">NEW TWEET</a></li>
+        <li><a href="search.html">SEARCH</a></li>
+      </ul>
+    </div>
+  </nav>
+</head>
+<body>
+  <div class="container">
+    <h1>Hello, try my twitter!</h1>
+    <br>
+    <br>
+    <button type="button" class="btn btn-primary btn-lg" onclick="getTimeline()">timeline</button>
+    <br>
+    <br>
+    <div class=tweet style="border-box: 8px">
+
+    </div>
+    <div class=content style="border-box: 8px">
+
+    </div>
+  </div>
+</body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+function getTimeline() {
+  // console.log('halo');
+  $(document).ready(function(){
+    // console.log('halo');
+    $.ajax({
+      type: 'GET',
+      dataType: 'JSON',
+      url: 'http://localhost:3000/api',
+      success: function (banyakdata) {
+        // console.log(banyakdata);
+        banyakdata.forEach(function (get) {
+          let data =
+          `
+          <div class="container">
+          <img src="${get.user.profile_image_url}" alt=''/>
+          <h4 class="card-title">${get.user.screen_name}</h4>
+          <p class="card-text">${get.text}</p>
+          <p class="card-text"><small class="text-muted">${get.created_at}</small></p>
+          </div>
+          `
+          $('.content').prepend(data)
+        })
+      },
+      error: function() {
+        console.log('err');
+      }
+    });
+  });
+}
+</script>
+</html>
