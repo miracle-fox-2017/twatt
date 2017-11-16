@@ -9,3 +9,7 @@ h1.ui.center.header {
 .profile {
   border-radius: 100%;
 }
+
+.content {
+  text-align: left;
+}
