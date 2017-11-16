@@ -12,9 +12,9 @@ $(document).ready(function() {
 		getHomeTimelines();
 	}
 
-	const getHomeTimelines = (maxId = null,  sinceId = null) => {
+	const getHomeTimelines = (maxId = null,  sinceId = null,  contentTobe = 'loaded') => {
 		$.ajax({
-			method:"GET",
+			method:"POST",
 			url: endpointRoot+'/timeline/home',
 			data: {
 				since_id: sinceId,
@@ -30,8 +30,13 @@ $(document).ready(function() {
 				btnLoadmore.attr('data-max-id', parsedResults[parsedResults.length - 1].id)
 				btnLoadmore.attr('data-current-endpoint', getCurrentEndpoint(this.url));
 
+					if (contentTobe === 'loaded') {
+						contentArea.html(crunchTweet(results));
+					} else {
+						contentArea.append(crunchTweet(results));
+					}	
+
 				loadingArea.hide();
-				contentArea.html(crunchTweet(results));
 			},
 			error: function(err) {
 				loadingArea.hide();
@@ -52,8 +57,6 @@ $(document).ready(function() {
 				loadingArea.show();
 			},
 			success : function(results) {
-				console.log(this.url);
-				// console.log(results);
 				if (results) {
 					let parsedResults = JSON.parse(results);
 
@@ -181,7 +184,7 @@ $(document).ready(function() {
 			// Load More Timeline 
 			
 			if (getCurrentEndpoint(currentEndpoint) === 'home') {
-				getHomeTimelines(maxId, null);
+				getHomeTimelines(maxId, null, 'appended');
 			}
 
 			if (getCurrentEndpoint(currentEndpoint) === 'user') {
@@ -192,10 +195,19 @@ $(document).ready(function() {
 	}
 
 	const getCurrentEndpoint = (url) => {
+		console.log('get CUrrent END```')
+		console.log(url.indexOf('?'));
 		let arrEndpointGen = url.split('/');
 
 		return arrEndpointGen[arrEndpointGen.length - 1];
 	} 
+
+	/*const getCurrentEndpoint = (url) => {
+		let endpointGen = url.match(/\/api(.*)\?/).pop(); // /twitter/timeline/user
+		let arrEndpointGen = endpointGen.split('/');			// ["twitter", "timeline", "user"]
+
+		return arrEndpointGen[arrEndpointGen.length - 1];
+	} */
 
 	loadInitTweet();
 	menuClicked();
