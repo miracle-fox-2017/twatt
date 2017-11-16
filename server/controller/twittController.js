@@ -9,7 +9,7 @@ const oauth = new OAuth.OAuth(
 	'1.0A',
 	null,
 	'HMAC-SHA1'
-	);
+);
 
 
 function timeline(req,res){
@@ -25,8 +25,19 @@ function timeline(req,res){
 }
 
 function search(req,res){
+	let searchPost;
+	let searchTimeline;
+	if(req.body.search[0] == "#"){ //if hastag
+		searchTimeline = req.body.search;
+		searchTimeline = req.body.search.slice(1);
+		searchPost = `https://api.twitter.com/1.1/search/tweets.json?q=%23${searchTimeline}`;
+	}else { //if not hastag
+		searchTimeline = req.body.search;
+		searchPost = `https://api.twitter.com/1.1/search/tweets.json?q=${searchTimeline}`;
+	}
+
 	oauth.get(
-	  `https://api.twitter.com/1.1/search/tweets.json?q=${req.body.search}`,
+	  searchPost,
       process.env.twitterAccessToken, //test user token 
       process.env.twitterAccessTokenSecret, //test user secret              
       function (e, data, response){

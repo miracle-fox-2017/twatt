@@ -18,17 +18,22 @@
 
 </head>
 
-<body>
-  <h2> Post Status <h2>
+<body style="width: 100%; text-align: center;">
+  <ul>
+    <li style="display: inline-block;"><button type="button" id="show-timeline">SHOW TIMELINE</button></li>
+    <li style="display: inline-block;"><input type="text" id="search-tweet" name="search-tweet">
+       <button type="button" id="button-search">Search</button> </li>
+  </ul>
+  
+  <h2> Post Status </h2>
     <div id="post-status">
       <textarea name="name" id="create-tweet"></textarea>
       <button type="button" id="post-tweet">Post Status</button>
-    </div>  
-    <h2> TIMELINE</h2>
+    </div>   
+    <div id="timeline"></div>
+    <div id="searchresult"></div>
 
-    <div id="timeline"><h2></h2></div>
-
-  </body>
+</body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
   <script src="index.js" type="text/javascript"></script>
 
