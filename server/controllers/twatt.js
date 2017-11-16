@@ -13,7 +13,7 @@ var oauth = new OAuth.OAuth(
 
 let timelineFeature = (req, res) => {
   oauth.get(
-    'https://api.twitter.com/1.1/statuses/user_timeline.json',
+    'https://api.twitter.com/1.1/statuses/home_timeline.json',
     process.env.USER_TOKEN, //test user token
     process.env.USER_SECRET, //test user secret
     function (e, data){
@@ -25,7 +25,7 @@ let timelineFeature = (req, res) => {
 
 let searchFeature = (req, res) => {
   oauth.get(
-    `https://api.twitter.com/1.1/search/tweets.json?q=${req.body.search}`,
+    `https://api.twitter.com/1.1/search/tweets.json?q=${req.query.q}`,
     process.env.USER_TOKEN, //test user token
     process.env.USER_SECRET, //test user secret
     function (e, data, response){
