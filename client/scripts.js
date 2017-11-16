@@ -53,7 +53,7 @@ $(document).ready(function() {
 			},
 			success : function(results) {
 				console.log(this.url);
-				console.log(results);
+				// console.log(results);
 				if (results) {
 					let parsedResults = JSON.parse(results);
 
@@ -62,13 +62,11 @@ $(document).ready(function() {
 					btnLoadmore.attr('data-max-id', parsedResults[parsedResults.length - 1].id)
 					btnLoadmore.attr('data-current-endpoint', (this.url[this.url.length - 1] !== '?' ? this.url : getCurrentEndpoint(this.url)));
 					
-					// if (contentTobe === 'loaded') {
-					// 	contentArea.html(crunchTweet(results));
-					// } else {
-					// 	contentArea.append(crunchTweet(results));
-					// }	
-
-					contentArea.append(crunchTweet(results));
+					if (contentTobe === 'loaded') {
+						contentArea.html(crunchTweet(results));
+					} else {
+						contentArea.append(crunchTweet(results));
+					}	
 				}
 
 				loadingArea.hide();
