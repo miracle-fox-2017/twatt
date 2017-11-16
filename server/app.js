@@ -15,7 +15,7 @@ app.use(cors());
 
 // Route
 const twitterRoute = require('./routers/twitterRoute');
-app.use('/twitter', twitterRoute);
+app.use('/api/twitter', twitterRoute);
 
 app.get('/', (req, res) => {
   TwitterClient.get("https://api.twitter.com/1.1/trends/place.json?id=23424977")
