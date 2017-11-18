@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+
 </head>
 
 <body>
@@ -17,9 +19,6 @@
             <a href="profile.html">
             <button type="button" class="btn btn-info">Profile</button></a>
             <h3>Mini Twitter</h3>
-
-            <input type="text" name="search" placeholder="Search..">
-
         </div>
         <div id="timeline">
 
@@ -30,29 +29,5 @@
 
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        // $('button').click(function () {
-        $.ajax({
-            url: "http://localhost:3000/twitters/",
-            method: 'GET',
-            dataType: 'JSON',
-            success: function (dataTweets) {
-                dataTweets.forEach(function (tweet) {
-                    console.log(tweet)
-                    $('#timeline').append(
-
-                        `<h4>${tweet.user.screen_name} </h4>
-                            <img src="${tweet.user.profile_image_url}">
-                            <p>${tweet.text} </p>`
-                    )
-                });
-            }
-        })
-    })
-
-</script>
 
 </html>
