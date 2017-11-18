@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Facebook Login JavaScript Example</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/../css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+</head>
+<body>
+  <div class="ui grid center aligned">
+    <div class="seven wide column">
+      <div class="ui container center aligned bottom-space">
+        <h1 class="ui center aligned header">Social VNX</h1>
+        <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
+        <div id="timeline"><br>
+      </div>
+      <div class="ui container center aligned bottom-space">
+        <div class="ui fluid action input">
+          <input placeholder="Apa yang sedang terjadi..." type="text" id="post">
+          <button class="ui primary button" type="button" id="post-status" name="button">Post</button>
+        </div>
+      </div>
+      <div class="ui container bottom-space">
+        <div class="ui feed" id="div-content">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+// This is called with the results from from FB.getLoginStatus().
+function statusChangeCallback(response) {
+  if (response.status === 'connected') {
+    localStorage.setItem("access_token", response.authResponse.accessToken);
+    getTimeline();
+  } else {
+    // The person is not logged into your app or we are unable to tell.
+    document.getElementById('status').innerHTML = 'Please log ' +
+    'into this app.';
+  }
+}
+
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
+
+window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '767185866797863',
+    cookie     : true,  // enable cookies to allow the server to access
+    // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.11' // use graph api version 2.8
+  });
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+};
+
+// Load the SDK asynchronously
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "https://connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+$('#post-status').click(function() {
+  axios.post('http://localhost:3000/fb/me/', {
+    status: $('input#post').val()
+  },{
+    headers: {
+      accesstoken: localStorage.getItem('access_token')
+    }
+  })
+  .then(function (response) {
+    $('input#post').val('')
+    getTimeline()
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+})
+
+let getTimeline = () => {
+  axios.get('http://localhost:3000/fb/profile/', {
+    headers: {
+      accesstoken: localStorage.getItem('access_token')
+    }
+  }).then(responseProfile => {
+    axios.get('http://localhost:3000/fb/me/', {
+      headers: {
+        accesstoken: localStorage.getItem('access_token')
+      }
+    })
+    .then(response => {
+      // FB.api(
+      //     "/1625124054197506_1510655115644401",
+      //     {fields: 'picture'},
+      //     function (responsePost) {
+      //       if (response && !response.error) {
+      //         console.log(responsePost);
+      //       }
+      //     }
+      // );
+      console.log(response.data)
+      $('#div-content').html(handleTimeline(response, responseProfile))
+    })
+  })
+  .catch(err => console.log(err))
+}
+
+function handleTimeline(response) {
+  let timeline = ''
+  response.data.data.forEach((data) => {
+    timeline += `
+    <div class="event">
+      <div class="label">
+        <img src="/images/avatar/small/joe.jpg">
+      </div>
+      <div class="content">
+        <div class="summary">
+          <a>Joe Henderson</a> posted on his page
+          <div class="date">
+            3 days ago
+          </div>
+        </div>
+        <div class="extra text">
+          ${data.message}
+        </div>
+        <div class="meta">
+          <a class="like">
+            <i class="like icon"></i> 5 Likes
+          </a>
+        </div>
+      </div>
+      </div>
+    `
+  })
+  return timeline
+}
+</script>
+
+<!--
+Below we include the Login Button social plugin. This button uses
+the JavaScript SDK to present a graphical Login button that triggers
+the FB.login() function when clicked.
+-->
+
+
+</html>
