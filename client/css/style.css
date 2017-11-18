@@ -13,3 +13,7 @@ h1.ui.center.header {
 .content {
   text-align: left;
 }
+
+.ui.facebook.button.hide {
+  display: none;
+}

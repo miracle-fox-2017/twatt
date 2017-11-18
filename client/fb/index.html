@@ -11,7 +11,14 @@
     <div class="seven wide column">
       <div class="ui container center aligned bottom-space">
         <h1 class="ui center aligned header">Social VNX</h1>
-        <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div>
+        <button id="fb-login" class="ui facebook button">
+          <i class="facebook icon"></i>
+          Login
+        </button>
+        <button id="fb-logout" class="ui facebook button">
+          <i class="facebook icon"></i>
+          Logout
+        </button>
         <div id="timeline"><br>
       </div>
       <div class="ui container center aligned bottom-space">
@@ -34,12 +41,14 @@
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
   if (response.status === 'connected') {
-    localStorage.setItem("access_token", response.authResponse.accessToken);
+    $( "#fb-login" ).last().addClass( "hide" );
+    $( "#fb-logout" ).last().removeClass( "hide" );
     getTimeline();
   } else {
+    $( "#fb-login" ).last().removeClass( "hide" );
+    $( "#fb-logout" ).last().addClass( "hide" );
     // The person is not logged into your app or we are unable to tell.
-    document.getElementById('status').innerHTML = 'Please log ' +
-    'into this app.';
+    $('#div-content').html('Please log into this app.')
   }
 }
 
@@ -66,12 +75,38 @@ window.fbAsyncInit = function() {
 
 // Load the SDK asynchronously
 (function(d, s, id) {
+  $( "#fb-logout" ).last().addClass( "logout" );
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "https://connect.facebook.net/en_US/sdk.js";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+function loginButton() {
+  FB.login(function(response) {
+    if (response.authResponse) {
+      window.fbAsyncInit()
+      localStorage.setItem("access_token", response.authResponse.accessToken);
+    } else {
+      console.log('User cancelled login or did not fully authorize.');
+    }
+  },{scope: 'email,user_likes,user_posts,publish_actions'});
+}
+
+function logoutButton() {
+  FB.logout(function(response) {
+    window.fbAsyncInit()
+  });
+}
+
+$('#fb-login').click(function() {
+  loginButton()
+})
+
+$('#fb-logout').click(function() {
+  logoutButton()
+})
 
 $('#post-status').click(function() {
   axios.post('http://localhost:3000/fb/me/', {
@@ -90,62 +125,81 @@ $('#post-status').click(function() {
   });
 })
 
-let getTimeline = () => {
+function getTimeline() {
   axios.get('http://localhost:3000/fb/profile/', {
     headers: {
       accesstoken: localStorage.getItem('access_token')
     }
   }).then(responseProfile => {
+    console.log(responseProfile);
     axios.get('http://localhost:3000/fb/me/', {
       headers: {
         accesstoken: localStorage.getItem('access_token')
       }
     })
     .then(response => {
-      // FB.api(
-      //     "/1625124054197506_1510655115644401",
-      //     {fields: 'picture'},
-      //     function (responsePost) {
-      //       if (response && !response.error) {
-      //         console.log(responsePost);
-      //       }
-      //     }
-      // );
-      console.log(response.data)
-      $('#div-content').html(handleTimeline(response, responseProfile))
+      $('#div-content').html(loading())
+      if(response.data){
+        $('#div-content').html(handleTimeline(response, responseProfile))
+      }
     })
   })
   .catch(err => console.log(err))
 }
 
+function loading() {
+  return `<div class="ui event">
+     <div class="ui active centered inline loader">
+       <div class="ui large text loader">Loading</div>
+     </div>
+   </div>`
+}
+
 function handleTimeline(response) {
   let timeline = ''
   response.data.data.forEach((data) => {
+    var d = new Date(data.created_time);
+    var n = d.toDateString();
     timeline += `
-    <div class="event">
-      <div class="label">
-        <img src="/images/avatar/small/joe.jpg">
-      </div>
-      <div class="content">
-        <div class="summary">
-          <a>Joe Henderson</a> posted on his page
+      <div class="event">
+        <div class="label">
+          <img src="${data.icon || '/../assets/img/post.png'}">
+        </div>
+        <div class="content">
           <div class="date">
-            3 days ago
+            ${n}
+          </div>
+          <div class="summary">
+            <a href="https://www.facebook.com/${data.from.id}">${data.from.name}</a> ${handleStatusType(data.status_type)}
+          </div>
+          <div class="extra text">
+            ${data.message || data.description || ''}
+            <p><i style="color:#90949c">${data.story || ''}</i></p>
+          </div>
+          <div class="extra images">
+            <a href="${data.link}"><img src="${data.picture || ''}"></a>
           </div>
         </div>
-        <div class="extra text">
-          ${data.message}
-        </div>
-        <div class="meta">
-          <a class="like">
-            <i class="like icon"></i> 5 Likes
-          </a>
-        </div>
       </div>
-      </div>
+      <div style="margin-top:-5px;" class="ui dividing header"></div>
     `
   })
   return timeline
+}
+
+function handleStatusType(statusType) {
+  switch(statusType) {
+    case 'mobile_status_update':
+        return 'post status';
+    case 'shared_story':
+        return 'shared link';
+    case 'wall_post':
+        return 'post on your page';
+    case 'added_photos':
+        return 'add new photo'
+    default:
+        return statusType;
+  }
 }
 </script>
 
