@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+    <title></title>
+  </head>
+  <body>
+    <div class="ui grid center aligned">
+      <div class="seven wide column">
+        <div class="ui container center aligned bottom-space">
+          <h1 class="ui center aligned header">Twatt</h1>
+          <button class="ui primary button" type="button" id="timeline" name="button">Perbarui</button>
+        </div>
+        <div class="ui container center aligned bottom-space">
+          <div class="ui fluid action input">
+            <input placeholder="Search..." type="text" id="search">
+            <button class="ui primary button" type="button" id="search-tweet" name="button">Search</button>
+          </div>
+        </div>
+        <div class="ui container center aligned bottom-space">
+          <div class="ui fluid action input">
+            <input placeholder="Apa yang sedang terjadi..." type="text" id="tweet">
+            <button class="ui primary button" type="button" id="post-tweet" name="button">Post</button>
+          </div>
+        </div>
+        <div class="ui container bottom-space">
+          <div class="ui relaxed divided items" id="div-content">
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+  <script src="/../assets/js/twatt.js"></script>
+</html>

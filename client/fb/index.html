@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Facebook Login JavaScript Example</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+</head>
+<body>
+  <div class="ui grid center aligned">
+    <div class="seven wide column">
+      <div class="ui container center aligned bottom-space">
+        <h1 class="ui center aligned header">Social VNX</h1>
+        <button id="fb-login" class="ui facebook button">
+          <i class="facebook icon"></i>
+          Login
+        </button>
+        <button id="fb-logout" class="ui facebook button">
+          <i class="facebook icon"></i>
+          Logout
+        </button>
+        <div id="timeline"><br>
+      </div>
+      <div class="ui container center aligned bottom-space">
+        <div class="ui fluid action input">
+          <input placeholder="Apa yang sedang terjadi..." type="text" id="post">
+          <button class="ui primary button" type="button" id="post-status" name="button">Post</button>
+        </div>
+      </div>
+      <div class="ui container bottom-space">
+        <div class="ui feed" id="div-content">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/../assets/js/fb.js"></script>
+
+</html>
