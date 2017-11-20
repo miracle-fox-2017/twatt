@@ -1,15 +1,13 @@
 const Twitter = require('../models/twitter')
 
 const search = (req, res) => {
-  // console.log(req.query);
+  console.log(req.query.q);
   Twitter.search(req.query.q)
   .then(tweets => res.send(tweets))
   .catch(err => res.status(500).send(err))
 }
 
 const timeline = (req, res) => {
-  // console.log('halooo');
-  // res.send('halooooo')
   Twitter.timeline()
   .then(tweets => res.send(tweets))
   .catch(err => res.status(500).send(err))
