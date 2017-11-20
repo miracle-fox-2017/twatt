@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const twitterController = require('../controllers/twitterController')
 
-router.get('/', twitterController.getHomeTimelines);
+router.post('/', twitterController.getHomeTimelines);
 router.post('/timeline/home', twitterController.getHomeTimelines);
 router.post('/timeline/user', twitterController.getUserTimelines);
 router.post('/search', twitterController.searchTweet);

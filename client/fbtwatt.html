@@ -7,21 +7,37 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 	<link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-	
 	<link rel="stylesheet" href="style.css" />
+	<script src="js/fbauth.js"></script>
 </head>
 <body>
-	
+	<div class="fblogin-area">
+		<div class="fblogin-wrap">
+			<!--
+				Below we include the Login Button social plugin. This button uses
+				the JavaScript SDK to present a graphical Login button that triggers
+				the FB.login() function when clicked.
+			-->
+
+			<fb:login-button scope="public_profile,email,user_posts" onlogin="checkLoginState();">
+			</fb:login-button>
+
+			<div id="status"></div>
+
+			<p>Refresh page after login</p>
+		</div><!-- /.fblogin-wrap -->
+	</div><!-- /.fblogin-area -->
+
 	<main class="app-container">
 		<div class="wrap">
 			<nav>
 				<div class="nav-wrapper">
-					<a href="#!" class="brand-logo"><i class="material-icons">tablet_android</i>Twatt App</a>
+					<a href="#!" class="brand-logo"><i class="material-icons">tablet_android</i>Facebook App</a>
 					<ul class="right hide-on-med-and-down">
 						<li>
 							<div class="search-area">
 								<form action="javascript:void(0)">
-									<input type="text" placeholder="Search Twatt" name="searchQuery" id="searchQuery"/>
+									<input type="text" placeholder="Search Facebook" name="searchQuery" id="searchQuery"/>
 								</form>
 							</div>
 						</li>
@@ -35,7 +51,7 @@
 			<div class="tweet-area">
 				<form action="javascript:void(0)">
 					<div class="input-field">
-						<textarea name="status" class="materialize-textarea" id="status" placeholder="Post your Tweet"></textarea>
+						<textarea name="status" class="materialize-textarea" id="status" placeholder="Post your Status"></textarea>
 					</div><!-- /.input-field -->
 				</form>
 			</div><!-- /.tweet-area -->
@@ -47,7 +63,7 @@
 				<img src="images/loading.gif" alt="loading" />
 			</div><!-- /#loading -->
 			
-			<a id="btnLoadmore" data-current-endpoint="" data-endpoint-url="" data-max-id="" data-since-id=""  class="waves-effect waves-light btn u-full-width">Load More</a>
+			<a id="btnLoadmore"  class="waves-effect waves-light btn u-full-width">Load More</a>
 		</div><!-- /.wrap -->
 
 	</main><!-- /.app-container -->
@@ -55,6 +71,7 @@
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="js/materialize.js"></script>
 	<script src="js/init.js"></script>
-	<script src="js/twitter.js"></script>
+	<script src="js/fbauth.js"></script>
+	<script src="js/facebook.js"></script>
 </body>
 </html>

@@ -8,7 +8,13 @@ body {
 	justify-content: center;
 }
 
-.app-container {
+.fblogin-wrap {
+	text-align: center;
+	width: 50%;
+	background: white;
+}
+
+.app-container, .fblogin-area {
 	display: flex;
 	align-items: center;
 	justify-content: center;
