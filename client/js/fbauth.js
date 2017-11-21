@@ -8,9 +8,12 @@
      $(".fblogin-area").hide();
      $('.app-container').show();
      setAuthLocalStorage(response);
-     // location.reload();
-     testAPI();
+     getUserFeed(response);
+     createUserPost(response);
    } else {
+    $(".fblogin-area").show();
+    $('.app-container').hide();
+
      // The person is not logged into your app or we are unable to tell.
      document.getElementById('status').innerHTML = 'Please log ' +
        'into this app.';
@@ -55,6 +58,71 @@
 }
 
 
- function testAPI() {
+ function loadFacebookData(response) {
    console.log('Welcome!  Fetching your information.... ');
+   console.log(response);
  }
+
+function getUserFeed() {
+  console.log('~~~~~~~~~~~~~Getting User Feed')
+
+  FB.api('/me',  {fields: 'id,name,posts,picture'}, function(response) {
+    console.log('~~~~~ALl post ', response);
+    $("#loading").hide();
+    $('#content-area').html(crunchPost(response));
+  });
+}
+
+function createUserPost(response) {
+  console.log('~~~~~~~~~~~~~Posting User Feed')
+
+  // FB.api('/me',  {fields: 'id,name,posts,picture'}, function(response) {
+  //   console.log('~~~~~ALl post ', response);
+  //   $("#loading").hide();
+  //   $('#content-area').html(crunchPost(response));
+  // });
+
+  $("#fbstatus").keypress(function(e) {
+    if(e.which == 13){
+      if (this.value.length > 1) {
+          $("#loading").show();
+          $('#content-area').html("");
+
+          FB.api('/me/feed', 'post', { message: this.value }, function(resp) {
+            if (!resp || resp.error) {
+              console.log('Error occured', resp.error);
+            } else {
+              console.log('Post ID: ' + resp.id);
+              getUserFeed(response);
+            }
+          });
+      } else {
+        alert("Status need more character");
+      }
+    }
+  });
+}
+
+function crunchPost (response) {
+  let content = '';
+  response.posts.data.forEach( function(post, index) {
+    content += `
+    <div class="card-panel grey lighten-5 z-depth-1">
+      <div class="row valign-wrapper">
+        <div class="col s2">
+          <img src="${response.picture.data.url}" alt="" class="circle responsive-img avatar-pic"> <!-- notice the "circle" class -->
+        </div>
+        <div class="col s10">
+          <p>#${post.id}</p>
+          <h5 class="card-title">@${response.name}</h5>
+          <span class="black-text">
+            ${post.message}
+          </span>
+        </div>
+      </div>
+    </div>
+    `;
+  });
+
+  return content;
+}

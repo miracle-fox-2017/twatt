@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 		$(".fblogin-area").show();
 		$('.app-container').hide();
-		console.log(typeof fbAccessToken === 'undefined' ||  fbAccessToken === null || fbAccessToken === "")
+
 		if (typeof fbAccessToken === 'undefined' ||  fbAccessToken === null || fbAccessToken === "") {
 			console.log('~~~~~~~~~ Please login First');
 			alert("Please Login First!");
@@ -23,8 +23,13 @@ $(document).ready(function(){
 	}
 
 	const getFeedTimelines = () => {
-		FB.api('/me',  {fields: 'id,name,posts'}, function(response) {
-			
+		console.log('~~~~~~~~~~~~~Getting User Feed')
+		checkAuthFBUser();
+
+		console.log('~~ Load Timeline User')
+		FB.api('/me',  {fields: 'id,name,posts,picture'}, function(response) {
+			console.log(response)
+			$("#loading").hide();
 			contentArea.html(crunchPost(response));
 		});
 	}
@@ -36,7 +41,7 @@ $(document).ready(function(){
 			<div class="card-panel grey lighten-5 z-depth-1">
 				<div class="row valign-wrapper">
 					<div class="col s2">
-						<img src="" alt="" class="circle responsive-img avatar-pic"> <!-- notice the "circle" class -->
+						<img src="${response.picture.data.url}" alt="" class="circle responsive-img avatar-pic"> <!-- notice the "circle" class -->
 					</div>
 					<div class="col s10">
 						<p>#${post.id}</p>
@@ -53,10 +58,15 @@ $(document).ready(function(){
 		return content;
 	}
 
+	const printData = (response) => {
+		console.log('~~~PRINT DATA');
+		console.log(printData);
+	}
+
 	$(".nav-icon.home").click(function(){
 		console.log('~~~~ GET FEEED HOME');
 		getFeedTimelines();
 	})
 
-	checkAuthFBUser();
+	// getFeedTimelines();
 });

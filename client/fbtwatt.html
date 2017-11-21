@@ -11,7 +11,7 @@
 	<script src="js/fbauth.js"></script>
 </head>
 <body>
-	<div class="fblogin-area">
+	<div class="fblogin-area" style="display: none;">
 		<div class="fblogin-wrap">
 			<!--
 				Below we include the Login Button social plugin. This button uses
@@ -19,7 +19,7 @@
 				the FB.login() function when clicked.
 			-->
 
-			<fb:login-button scope="public_profile,email,user_posts" onlogin="checkLoginState();">
+			<fb:login-button scope="public_profile,email,user_posts,publish_actions" onlogin="checkLoginState();">
 			</fb:login-button>
 
 			<div id="status"></div>
@@ -47,22 +47,22 @@
 					</ul>
 				</div>
 			</nav>
-			
+
 			<div class="tweet-area">
 				<form action="javascript:void(0)">
 					<div class="input-field">
-						<textarea name="status" class="materialize-textarea" id="status" placeholder="Post your Status"></textarea>
+						<textarea name="fbstatus" class="materialize-textarea" id="fbstatus" placeholder="Post your Status"></textarea>
 					</div><!-- /.input-field -->
 				</form>
 			</div><!-- /.tweet-area -->
 
 			<div class="content" id="content-area">
 			</div><!-- /.content -->
-		
+
 			<div id="loading" class="u-full-width">
 				<img src="images/loading.gif" alt="loading" />
 			</div><!-- /#loading -->
-			
+
 			<a id="btnLoadmore"  class="waves-effect waves-light btn u-full-width">Load More</a>
 		</div><!-- /.wrap -->
 
@@ -73,5 +73,6 @@
 	<script src="js/init.js"></script>
 	<script src="js/fbauth.js"></script>
 	<script src="js/facebook.js"></script>
+
 </body>
 </html>
