@@ -11,6 +11,7 @@ const getAllTweet = (req, res)=> {
 }
 
 const postTweet = (req, res)=> {
+	console.log(req);
 	Twatt.postTweet(req.body.tweet)
 	.then(data => {
 		res.send(data)
@@ -21,8 +22,9 @@ const postTweet = (req, res)=> {
 }
 
 const searchTweet = (req, res)=> {
-	Twatt.searchTweet(req.body.query)
+	Twatt.searchTweet(req.body.inputSearch)
 	.then(data => {
+		console.log(data);
 		res.send(data)
 	})
 	.catch(err => {

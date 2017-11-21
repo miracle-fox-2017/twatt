@@ -51,7 +51,7 @@ class Twatt {
   static searchTweet(strInput){
     return new Promise((resolve, reject) => {
       oauth.get(
-      `https://api.twitter.com/1.1/search/tweets.json`,
+      `https://api.twitter.com/1.1/search/tweets.json?q="${strInput}"`,
       process.env.user_token, //test user token 
       process.env.user_secret,             
       function (err, data){
