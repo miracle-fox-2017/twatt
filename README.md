@@ -8,6 +8,7 @@ simple twitter client can do update status, show timeline, and search tweet.
 | /api/twitter | GET | none | get timeline tweet |
 | /api/twitter | POST | status | post new tweet |
 | /api/twitter/search/ | POST | search keyword | return latest tweet |
+| /api/twitter/image | POST | image,status | post new tweet and image (use multi part form data) |
 
 ## How to use this:  
 1. npm install
