@@ -1,5 +1,5 @@
 const OAuth = require('oauth');
-const multer = require('multer');
+const fs = require('fs');
 require('dotenv').config()
 
 
@@ -32,7 +32,10 @@ let postNewTweet = (req, res) =>{
     "https://api.twitter.com/1.1/statuses/update.json",
     process.env.USER_TOKEN, //test user token 
     process.env.USER_SECRET, //test user secret        
-    {"status": req.body.status},
+    {
+      "status": req.body.status,
+      "media_ids": req.body.mediaid
+    },
     function(error, data) {
       if(error) res.status(500).send(error)
       else {
@@ -56,8 +59,44 @@ let searchTweet = (req, res) =>{
     });
 }
 
+let postImage = (req, res) => {
+  var base64Image = new Buffer(req.file.buffer, 'binary').toString('base64');
+  oauth.post(
+    "https://upload.twitter.com/1.1/media/upload.json",
+    process.env.USER_TOKEN, //test user token 
+    process.env.USER_SECRET, //test user secret        
+    {
+      "media": base64Image
+    },
+    function(error, data) {
+      if(error) res.status(500).send(error)
+      else {
+        var jsons = JSON.parse(data)
+        // res.send(data)
+        oauth.post(
+          "https://api.twitter.com/1.1/statuses/update.json",
+          process.env.USER_TOKEN, //test user token 
+          process.env.USER_SECRET, //test user secret        
+          {
+            "status": req.body.status,
+            "media_ids": jsons.media_id_string
+          },
+          function(error, data) {
+            if(error) res.status(500).send(error)
+            else {
+              res.send(data)
+            }
+          }
+        );
+      }
+    }
+  );
+}
+
+
 module.exports = {
   getTimelineTweet,
   postNewTweet,
-  searchTweet
+  searchTweet,
+  postImage
 };

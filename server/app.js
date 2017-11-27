@@ -1,6 +1,7 @@
 const app = require('express')();
 const bodyParser = require('body-parser')
 const twitter = require('./routers/twitter')
+const facebook = require('./routers/fb')
 var cors = require('cors')
 
 
@@ -10,6 +11,7 @@ app.use(bodyParser.json()) // parse application/json
 app.use(cors({credentials: true, origin: true}))
 
 app.use('/api/twitter', twitter)
+app.use('/api/fb', facebook)
 
 app.get('/', (req, res)=>{
   let msg = {msg: 'hello world'}
