@@ -1,0 +1,51 @@
+body {
+	background: #FCE4EC;
+}
+
+#loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.fblogin-wrap {
+	text-align: center;
+	width: 50%;
+	background: white;
+}
+
+.app-container, .fblogin-area {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.avatar-pic{
+	width: 100%;
+}
+
+.wrap {
+	width: 50%;
+	background: white;
+}
+
+.card-title {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.avatar-pic {
+	width: 100%;
+}
+
+.u-full-width {
+	width: 100%;
+}
+
+.nav-wrapper {
+	padding: 0 10px;
+}
+
+.tweet-area {
+	padding: 10px;
+}
