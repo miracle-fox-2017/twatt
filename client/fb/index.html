@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
+<style>
+  #loginButton{
+    background-color: #3B7CFF;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 18px;
+    color: #fff;
+    font-size: 16px;
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+<body>
+  <script src="../lib/fb.js" charset="utf-8"></script>
+
+  <button type="button" id="loginButton" onclick="fbLogin()">LOG IN WITH FACEBOOK</button>
+
+  <div id="status">
+  </div>
+
+</body>
+</html>
