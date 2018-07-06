@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</head>
+<body>
+<div>
+	<h3 id="coba">Nijar tampan</h3>
+	<button onclick="refreshFunction()" type="button" class="btn btn-primary" id="refresh">Refresh Tweets</button>
+	<button onclick="sendTweet()" type="button" class="btn btn-primary">Tweet</button>
+	<input type="text" id="newTweet">
+	<button type="button" class="btn btn-primary" onclick="searchTweet()">Search</button>
+	<input type="text" id="strSearch">
+</div>
+<div class="tweetsLine">
+	
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		crossorigin="anonymous">
+</script>
+<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+	$( document ).ready(function() {
+		$.get("http://localhost:3000/api/twatt", function(data, status) {
+
+			if(status === 'success') {
+				let tweets = JSON.parse(data)
+				tweets.forEach(tweet => {
+					$(".tweetsLine").append(`
+    				<img src="${tweet.user.profile_image_url}" alt="Smiley face" width="42" height="42"><br>
+    				<p>"${tweet.text}"</p
+    				`)
+				})
+			}
+		})
+	})
+
+	function refreshFunction() {
+		location.reload()
+	}
+
+	function sendTweet() {
+		let tweet = $("#newTweet").val()
+
+		$.post("http://localhost:3000/api/twatt", {
+			tweet : tweet
+		}, function(data, status) {
+			if(status === 'success'){
+				location.reload(); 
+			}
+		})
+	}
+
+	function searchTweet() {
+		let inputSearch = $("#strSearch").val()
+		document.querySelector(".tweetsLine").innerHTML = ""
+		$.post("http://localhost:3000/api/twatt/search", {
+			inputSearch : inputSearch
+		}, function(data, status) {
+
+			if(status === "success"){
+				let tweets = JSON.parse(data)
+				tweets.statuses.forEach(tweet => {
+					$(".tweetsLine").append(`
+    				<img src="${tweet.user.profile_image_url}" alt="Smiley face" width="42" height="42"><br>
+    				<p>"${tweet.text}"</p
+    				`)
+				})
+			}
+		})
+	}
+</script>
+</html>
